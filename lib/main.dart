@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import './widgets/transaction_list.dart';
 
-
+import './widgets/user_transactions.dart';
 void main() {
   runApp(MyApp());
 }
@@ -29,12 +28,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //Liste des transactions
-  //Ne pas oublier l'import
-
-  //varibale de ce que rentre l'utilisateur
-  // String titleInput;
-  // String amountInput;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
@@ -61,48 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
               elevation: 5,
             ),
           ),
-          Card(
-            elevation: 5,
-            child: Container(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Titre',
-                    ),
-                    controller: titleController,
-                    // onChanged: (value) {
-                    //   titleInput = value;
-                    // },
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Prix',
-                    ),
-                    controller: amountController,
-                    // onChanged: (value) => amountInput = value,
-                  ),
-                  FlatButton(
-                    child: Text(
-                      'Ajouter une dépense',
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 14,
-                      ),
-                    ),
-                    onPressed: () {
-                      print(titleController.text);
-                      print(amountController.text);
-                    },
-                  )
-                ],
-              ),
-            )
-          ),
-          //Appel la listes des transaction par sa function
-          TransactionList()
+          UserTransactions(),
           //liste des transactions
         ],
       ),
