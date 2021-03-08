@@ -48,6 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+  //varibale de ce que rentre l'utilisateur
+  // String titleInput;
+  // String amountInput;
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //mise en column du body
       body: Column(
         //style de la column
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           //espace graphique dans un container
@@ -71,9 +77,50 @@ class _MyHomePageState extends State<MyHomePage> {
               elevation: 5,
             ),
           ),
+          Card(
+              elevation: 5,
+              child: Container(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Titre',
+                        
+                      ),
+                      controller: titleController,
+                      // onChanged: (value) {
+                      //   titleInput = value;
+                      // },
+                    ),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: 'Prix',
+                        
+                      ),
+                      controller: amountController,
+                      // onChanged: (value) => amountInput = value,
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'Ajouter une dépense',
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 14,
+                        ),
+                      ),
+                      onPressed: () {
+                        print(titleController.text);
+                        // print(amountInput);
+                      },
+                    )
+                  ],
+                ),
+              )),
+
           //liste des transactions
           Column(
-            
             children: transactions.map((tx) {
               //display one transaction
               return Card(
@@ -112,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Text(
-                          DateFormat.EEEE().format(tx.date),
+                          DateFormat.yMEd().format(tx.date),
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey[400],
