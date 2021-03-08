@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import './widgets/transaction_list.dart';
 
-import './transaction.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,21 +31,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //Liste des transactions
   //Ne pas oublier l'import
-  final List<Transaction> transactions = [
-    //creation de la transaction grace à l'objet transaction()
-    Transaction(
-      id: 'T1',
-      title: 'Nouvelle chaussure',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 'T2',
-      title: 'Téléphone',
-      amount: 150,
-      date: DateTime.now(),
-    ),
-  ];
 
   //varibale de ce que rentre l'utilisateur
   // String titleInput;
@@ -78,100 +62,48 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           Card(
-              elevation: 5,
-              child: Container(
-                padding: EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Titre',
-                        
-                      ),
-                      controller: titleController,
-                      // onChanged: (value) {
-                      //   titleInput = value;
-                      // },
+            elevation: 5,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Titre',
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Prix',
-                        
-                      ),
-                      controller: amountController,
-                      // onChanged: (value) => amountInput = value,
+                    controller: titleController,
+                    // onChanged: (value) {
+                    //   titleInput = value;
+                    // },
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      labelText: 'Prix',
                     ),
-                    FlatButton(
-                      child: Text(
-                        'Ajouter une dépense',
-                        style: TextStyle(
-                          color: Colors.purple,
-                          fontSize: 14,
-                        ),
-                      ),
-                      onPressed: () {
-                        print(titleController.text);
-                        // print(amountInput);
-                      },
-                    )
-                  ],
-                ),
-              )),
-
-          //liste des transactions
-          Column(
-            children: transactions.map((tx) {
-              //display one transaction
-              return Card(
-                child: Row(
-                  children: <Widget>[
-                    //Price
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 15,
-                      ),
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border.all(
+                    controller: amountController,
+                    // onChanged: (value) => amountInput = value,
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Ajouter une dépense',
+                      style: TextStyle(
                         color: Colors.purple,
-                        width: 2,
-                      )),
-                      child: Text(
-                        tx.amount.toString() + '€', //pour le $ '\$${tx.amount}'
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.purple,
-                        ),
+                        fontSize: 14,
                       ),
                     ),
-                    //Title et date
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          tx.title,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          DateFormat.yMEd().format(tx.date),
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey[400],
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
+                    onPressed: () {
+                      print(titleController.text);
+                      print(amountController.text);
+                    },
+                  )
+                ],
+              ),
+            )
           ),
+          //Appel la listes des transaction par sa function
+          TransactionList()
+          //liste des transactions
         ],
       ),
     );
