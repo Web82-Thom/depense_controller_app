@@ -38,25 +38,27 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       //mise en column du body
-      body: Column(
-        //style de la column
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          //espace graphique dans un container
-          Container(
-            width: double.infinity,
-            child: Card(
-              //envelopper le Text et donner des dimensions avec un widget container dimensionnel pour envelopper le Text et donner des dimensions
-              child:
-                  Container(color: Colors.blue[200], child: Text('Graphique')),
-              // style de la card ombre
-              elevation: 5,
+      body: SingleChildScrollView(
+              child: Column(
+          //style de la column
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            //espace graphique dans un container
+            Container(
+              width: double.infinity,
+              child: Card(
+                //envelopper le Text et donner des dimensions avec un widget container dimensionnel pour envelopper le Text et donner des dimensions
+                child:
+                    Container(color: Colors.blue[200], child: Text('Graphique')),
+                // style de la card ombre
+                elevation: 5,
+              ),
             ),
-          ),
-          UserTransactions(),
-          //liste des transactions
-        ],
+            UserTransactions(),
+            //liste des transactions
+          ],
+        ),
       ),
     );
   }
