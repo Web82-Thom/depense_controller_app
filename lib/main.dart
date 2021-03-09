@@ -36,6 +36,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        //ajout d'un buton +
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.add), onPressed: () {},)
+        ],
+
       ),
       //mise en column du body
       body: SingleChildScrollView(
@@ -59,6 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
             //liste des transactions
           ],
         ),
+      ),
+      //emplecement du button en bas
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      //ajout d'un bouton flottant
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
       ),
     );
   }
