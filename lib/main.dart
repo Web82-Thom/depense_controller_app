@@ -17,11 +17,37 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Gestion de mes dépenses',
+      title: 'Dépenses personnel',
       theme: ThemeData(
+        //color principal du theme
         primarySwatch: Colors.blue,
+        //color button
+        accentColor: Colors.amber,
+        //fonts
+        fontFamily: 'Quicksand',
+        //font des autres titres title of transactions
+        textTheme: ThemeData.light().textTheme.copyWith(
+          headline6: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.green,
+          )
+        ),
+        // font appbar
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+            //jouer avec les options HeadLine
+            headline6: TextStyle(
+              fontFamily: 'OpenSans', 
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
-      home: MyHomePage(title: 'Gestion des dépenses'),
+      home: MyHomePage(title: 'Gestions des dépenses'),
     );
   }
 }
@@ -76,12 +102,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ); 
     },);
   }
-
+  //CONSTRUCTEUR DE LA PAGE
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title, 
+        ),
         //ajout d'un buton +
         actions: <Widget>[
           IconButton(
