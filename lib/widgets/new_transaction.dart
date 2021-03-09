@@ -36,6 +36,7 @@ class _NewTransactionState extends State<NewTransaction> {
       elevation: 5,
       child: Container(
         padding: EdgeInsets.all(15),
+        height: 1000,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
