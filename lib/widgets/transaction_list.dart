@@ -11,17 +11,19 @@ class TransactionList extends StatelessWidget {
   //Instencie la list
   TransactionList(this.transactions);
 
+  //CONSTRUCTEUR DU CONTAINER DISPLAY TRANSACTION
   @override
   Widget build(BuildContext context) {
     return  Container(
-      height: 300,
+      //important mettre une hauteur
+      height: 500,
       //methode de scroll par ListView et la propriété itemBuilder en fontion annonyme 
       child: ListView.builder(
         itemBuilder: (contexte, index) {
           return Card(
             child: Row(
               children: <Widget>[
-                //Price
+                //AMOUNT
                 Container(
                   margin: EdgeInsets.symmetric(
                     vertical: 10,
@@ -30,7 +32,7 @@ class TransactionList extends StatelessWidget {
                   padding: EdgeInsets.all(5),
                   decoration: BoxDecoration(
                       border: Border.all(
-                    color: Colors.purple,
+                    color: Theme.of(context).primaryColor,
                     width: 2,
                   )),
                   child: Text(
@@ -38,20 +40,19 @@ class TransactionList extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Colors.purple,
+                      // rappel de la couleur du theme
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
-                //Title et date
+                //TITLE AND DATE
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
                       transactions[index].title,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      //Le style par rapport au theme predefini dans main.dart
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     Text(
                       DateFormat.yMEd().format(transactions[index].date),
