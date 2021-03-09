@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+// import 'package:intl/intl.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
+import './widgets/chart.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -76,7 +79,18 @@ class _MyHomePageState extends State<MyHomePage> {
       //   date: DateTime.now(),
       // ),
   ];
-
+  //guetter transactions
+  List<Transaction> get _recentTransactions {
+    //executer une function sur chaque éléments d'une liste. si c'est true l'élément est conserver dans une list (.where)
+    return _userTransactions.where((tx) {
+      //verifie seule les transaction des 7 dernier jours
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
   //Methode pour ajouter une transaction et pointer sur les values txTitle et txAmount
   void _addNewTransaction(String txTitle, double txAmount) {
     final newTx = Transaction(
@@ -128,16 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             //espace graphique dans un container
-            Container(
-              width: double.infinity,
-              child: Card(
-                //envelopper le Text et donner des dimensions avec un widget container dimensionnel pour envelopper le Text et donner des dimensions
-                child:
-                    Container(color: Colors.blue[200], child: Text('Graphique')),
-                // style de la card ombre
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
             //liste des transactions
           ],
