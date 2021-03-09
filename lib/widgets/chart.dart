@@ -34,7 +34,7 @@ class Chart extends StatelessWidget {
 
       // pour gerer les dates utiliser "import intl"
       return {
-        'day': DateFormat.E().format(weekDay),
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
          'amount': totalSum,
       };
     });
@@ -48,7 +48,14 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      // child: ,
+      child: Row(
+        children: groupedTransactionValues.map((data) {
+          //concatenation
+          return Text('${data['day']}: ${data['amount']}');
+        }).toList(),
+
+      ),
+      
       
     );
   }
