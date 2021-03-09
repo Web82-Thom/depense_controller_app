@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
-import './widgets/user_transactions.dart';
+import './widgets/new_transaction.dart';
+import './widgets/transaction_list.dart';
+import './models/transaction.dart';
 void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,8 +35,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final List<Transaction> _userTransactions = [
+      Transaction(
+        id: 'T1',
+        title: 'Nouvelle chaussure',
+        amount: 69.99,
+        date: DateTime.now(),
+      ),
+      Transaction(
+        id: 'T2',
+        title: 'Téléphone',
+        amount: 150,
+        date: DateTime.now(),
+      ),
+  ];
+
+  //Methode pour ajouter une transaction et pointer sur les values txTitle et txAmount
+  void _addNewTransaction(String txTitle, double txAmount) {
+    final newTx = Transaction(
+      title: txTitle,
+      amount: txAmount,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+    );
+
+    setState((){
+      _userTransactions.add(newTx);
+    });
+  }
+
+  //Creer une méthode pour affiché le form d'un new-transaction
+  void _startAddNewTransaction(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          child : NewTransaction(_addNewTransaction);
+          behavior: HitTestBehavior.opaque,
+        ) 
+    },);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         //ajout d'un buton +
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: () {},)
+          IconButton(
+            icon: Icon(Icons.add), 
+            onPressed: () => _startAddNewTransaction(context),
+          )
         ],
 
       ),
@@ -60,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 elevation: 5,
               ),
             ),
-            UserTransactions(),
+            TransactionList(_userTransactions),
             //liste des transactions
           ],
         ),
@@ -70,7 +119,8 @@ class _MyHomePageState extends State<MyHomePage> {
       //ajout d'un bouton flottant
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        //si on appuit montre le form title + amount
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
