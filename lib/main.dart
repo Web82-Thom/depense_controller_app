@@ -61,19 +61,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  //LIST DES TRANSACTIONS
   final List<Transaction> _userTransactions = [
-      Transaction(
-        id: 'T1',
-        title: 'Nouvelle chaussure',
-        amount: 69.99,
-        date: DateTime.now(),
-      ),
-      Transaction(
-        id: 'T2',
-        title: 'Téléphone',
-        amount: 150,
-        date: DateTime.now(),
-      ),
+      // Transaction(
+      //   id: 'T1',
+      //   title: 'Nouvelle chaussure',
+      //   amount: 69.99,
+      //   date: DateTime.now(),
+      // ),
+      // Transaction(
+      //   id: 'T2',
+      //   title: 'Téléphone',
+      //   amount: 150,
+      //   date: DateTime.now(),
+      // ),
   ];
 
   //Methode pour ajouter une transaction et pointer sur les values txTitle et txAmount
