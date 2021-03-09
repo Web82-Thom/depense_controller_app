@@ -1,5 +1,6 @@
-import 'package:depense_controller_app/models/transaction.dart';
 import 'package:flutter/material.dart';
+
+import 'package:depense_controller_app/models/transaction.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
@@ -33,7 +34,7 @@ class TransactionList extends StatelessWidget {
                     width: 2,
                   )),
                   child: Text(
-                    transactions[index].amount.toString() + '€', //pour le $ '\$${tx.amount}'
+                    transactions[index].amount.toStringAsFixed(2) + '€', //pour le $ '\$${tx.amount}'
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
