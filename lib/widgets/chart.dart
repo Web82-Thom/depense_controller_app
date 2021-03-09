@@ -29,12 +29,12 @@ class Chart extends StatelessWidget {
             }
       }
 
-      print(DateFormat.E(weekDay));
+      print(DateFormat.E().format(weekDay));
       print(totalSum);
 
       // pour gerer les dates utiliser "import intl"
       return {
-        'day': DateFormat.E(weekDay),
+        'day': DateFormat.E().format(weekDay),
          'amount': totalSum,
       };
     });
@@ -43,6 +43,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(groupedTransactionValues);
     //Envelopper ce graph dans une CARD
     return Card(
       elevation: 6,
