@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import './chart_bar.dart';
 import '../models/transaction.dart';
-
 import 'package:intl/intl.dart';
+
+
 // import '../widgets/transaction_list.dart';
 
 //Ce widget produira simplement des données visuelles
@@ -41,6 +43,12 @@ class Chart extends StatelessWidget {
 
   }
 
+  double get totalSpending {
+    return groupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['amount'];
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print(groupedTransactionValues);
@@ -51,7 +59,13 @@ class Chart extends StatelessWidget {
       child: Row(
         children: groupedTransactionValues.map((data) {
           //concatenation
-          return Text('${data['day']}: ${data['amount']}');
+          return ChartBar(
+            data['day'], 
+            data['amount'],
+            //condition si pas la somme est a 0 alors affiche 0 sinon fait le ratio
+            totalSpending == 0.0 
+            ? 0.0 : (data['amount']as double) / totalSpending,
+          );
         }).toList(),
 
       ),
