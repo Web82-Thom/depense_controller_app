@@ -31,12 +31,14 @@ class Chart extends StatelessWidget {
             }
       }
 
+      // Intl.withLocale('fr', () => print('myMessage()'));
+      //Intl.defaultLocale = 'pt_BR';
       print(DateFormat.E().format(weekDay));
       print(totalSum);
 
       // pour gerer les dates utiliser "import intl"
       return {
-        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'day': DateFormat.EEEE('fr').format(weekDay).substring(0, 1),
          'amount': totalSum,
       };
     });
@@ -61,7 +63,7 @@ class Chart extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: groupedTransactionValues.map((data) {
-            //concatenation
+            
             return Flexible(
               fit: FlexFit.tight,
               child: ChartBar(
