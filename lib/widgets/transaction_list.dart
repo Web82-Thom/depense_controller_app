@@ -16,7 +16,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       //important mettre une hauteur
-      height: 300,
+      height: 370,
       //methode de scroll par ListView et la propriété itemBuilder en fontion annonyme
       child: transactions.isEmpty
           ? Column(children: <Widget>[
