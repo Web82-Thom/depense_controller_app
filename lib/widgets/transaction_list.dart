@@ -6,9 +6,10 @@ import '../models/transaction.dart';
 class TransactionList extends StatelessWidget {
   //recuperer le transactions
   final List<Transaction> transactions;
+  final Function deleteTx;
 
-  //Instencie la list
-  TransactionList(this.transactions);
+  //Instencie la list et function
+  TransactionList(this.transactions, this.deleteTx);
 
   //CONSTRUCTEUR DU CONTAINER DISPLAY TRANSACTION
   @override
@@ -68,11 +69,11 @@ class TransactionList extends StatelessWidget {
                           color: Colors.grey[400],
                         ),
                       ),
-                      // trailing: IconButton(
-                      //   icon: Icon(Icons.delete), 
-                      //   color: Theme.of(context).errorColor,
-                      //   onPressed: () {},
-                      //   ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete), 
+                        color: Theme.of(context).errorColor,
+                        onPressed: () => deleteTx(transactions[index].id),
+                        ),
                     ),
                 );
               },
