@@ -39,52 +39,81 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (contexte, index) {
                 return Card(
-                  child: Row(
-                    children: <Widget>[
-                      //AMOUNT
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 15,
-                        ),
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 2,
-                        )),
-                        child: Text(
-                          transactions[index].amount.toStringAsFixed(2) +
-                              '€', //pour le $ '\$${tx.amount}'
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            // rappel de la couleur du theme
-                            color: Theme.of(context).primaryColor,
+                  elevation: 6,
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10,),
+                      child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child : Padding(
+                        padding: EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text(
+                            transactions[index].amount.toStringAsFixed(2) +'€',
                           ),
                         ),
                       ),
-                      //TITLE AND DATE
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            transactions[index].title,
-                            //Le style par rapport au theme predefini dans main.dart
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          Text(
-                            DateFormat.yMEd('fr').format(transactions[index].date),
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey[400],
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      transactions[index].title,
+                      //Le style par rapport au theme predefini dans main.dart
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMEd('fr').format(transactions[index].date),
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey[400],
+                      ),
+                    ), 
                   ),
                 );
+                // return Card(
+                //   child: Row(
+                //     children: <Widget>[
+                //       //AMOUNT
+                //       Container(
+                //         margin: EdgeInsets.symmetric(
+                //           vertical: 10,
+                //           horizontal: 15,
+                //         ),
+                //         padding: EdgeInsets.all(5),
+                //         decoration: BoxDecoration(
+                //             border: Border.all(
+                //           color: Theme.of(context).primaryColor,
+                //           width: 2,
+                //         )),
+                //         child: Text(
+                //           transactions[index].amount.toStringAsFixed(2) +
+                //               '€', //pour le $ '\$${tx.amount}'
+                //           style: TextStyle(
+                //             fontWeight: FontWeight.bold,
+                //             fontSize: 20,
+                //             // rappel de la couleur du theme
+                //             color: Theme.of(context).primaryColor,
+                //           ),
+                //         ),
+                //       ),
+                //       //TITLE AND DATE
+                //       Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: <Widget>[
+                //           Text(
+                //             transactions[index].title,
+                //             //Le style par rapport au theme predefini dans main.dart
+                //             style: Theme.of(context).textTheme.headline6,
+                //           ),
+                //           Text(
+                //             DateFormat.yMEd('fr').format(transactions[index].date),
+                //             style: TextStyle(
+                //               fontSize: 15,
+                //               color: Colors.grey[400],
+                //             ),
+                //           ),
+                //         ],
+                //       )
+                //     ],
+                //   ),
+                // );
               },
               itemCount: transactions.length,
             ),
