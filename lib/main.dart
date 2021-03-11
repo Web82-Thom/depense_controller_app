@@ -37,6 +37,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
         //color button
         accentColor: Colors.amber,
+        // errorColor: Colors.red,
         //fonts
         fontFamily: 'Quicksand',
         //font des autres titres title of transactions

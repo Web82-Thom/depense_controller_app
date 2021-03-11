@@ -40,32 +40,40 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (contexte, index) {
                 return Card(
                   elevation: 6,
-                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10,),
-                      child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child : Padding(
-                        padding: EdgeInsets.all(6),
-                        child: FittedBox(
-                          child: Text(
-                            transactions[index].amount.toStringAsFixed(2) +'€',
+                  margin: EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 10,
+                  ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child : Padding(
+                          padding: EdgeInsets.all(6),
+                          child: FittedBox(
+                            child: Text(
+                              transactions[index].amount.toStringAsFixed(2) +'€',
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    title: Text(
-                      transactions[index].title,
-                      //Le style par rapport au theme predefini dans main.dart
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    subtitle: Text(
-                      DateFormat.yMEd('fr').format(transactions[index].date),
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[400],
+                      title: Text(
+                        transactions[index].title,
+                        //Le style par rapport au theme predefini dans main.dart
+                        style: Theme.of(context).textTheme.headline6,
                       ),
-                    ), 
-                  ),
+                      subtitle: Text(
+                        DateFormat.yMEd('fr').format(transactions[index].date),
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey[400],
+                        ),
+                      ),
+                      // trailing: IconButton(
+                      //   icon: Icon(Icons.delete), 
+                      //   color: Theme.of(context).errorColor,
+                      //   onPressed: () {},
+                      //   ),
+                    ),
                 );
               },
               itemCount: transactions.length,
