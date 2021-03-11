@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   //Intencie
@@ -11,23 +12,43 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime _selectedDate;
 
-  final amountController = TextEditingController();
-
-  void submitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.parse(amountController.text);
+  void _submitData() {
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
 
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
-
+    
     widget.addTx(
       enteredTitle,
       enteredAmount);
     
     Navigator.of(context).pop();
+  }
+
+  //Affichage du selecteur de date
+  void _presentDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(), 
+      firstDate: DateTime(2015), 
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      //setState Renvoie à dart l'état
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+      
+    });
+    print('...');
   }
 
   @override
@@ -45,22 +66,27 @@ class _NewTransactionState extends State<NewTransaction> {
               decoration: InputDecoration(
                 labelText: 'Titre',
               ),
-              controller: titleController,
-              onSubmitted: (_) => submitData(), //appel la function
+              controller: _titleController,
+              onSubmitted: (_) => _submitData(), //appel la function
             ),
             TextField(
               decoration: InputDecoration(
                 labelText: 'Prix',
               ),
-              controller: amountController,
+              controller: _amountController,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData(), //appel la function 
+              onSubmitted: (_) => _submitData(), //appel la function 
             ),
             Container(
               height: 80,
               child: Row(
                 children: <Widget>[
-                  Text('Pas de date selectionner!'),
+                  Expanded(
+                                      child: Text(_selectedDate == null 
+                      ? 'Pas de date selectionner!' 
+                      : DateFormat.yMMMMEEEEd('fr').format(_selectedDate),
+                    ),
+                  ),
                   TextButton(
                     child: Text(
                       'Choisissez une date',
@@ -70,7 +96,7 @@ class _NewTransactionState extends State<NewTransaction> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {},//appel la function
+                    onPressed: _presentDatePicker,//appel la function
                   ),
                 ],
               ),
@@ -88,7 +114,7 @@ class _NewTransactionState extends State<NewTransaction> {
                       fontSize: 14,
                     ),
                   ),
-                  onPressed: submitData,//appel la function
+                  onPressed: _submitData,//appel la function
                 ),
               ),
             ),
