@@ -46,7 +46,8 @@ class _MyAppState extends State<MyApp> {
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.green,
-          )
+          ),
+          button: TextStyle(color: Colors.white,),
         ),
         // font appbar
         appBarTheme: AppBarTheme(
