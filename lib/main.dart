@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
         //color button
         accentColor: Colors.amber,
-        // errorColor: Colors.red,
+        errorColor: Colors.red,
         //fonts
         fontFamily: 'Quicksand',
         //font des autres titres title of transactions
@@ -120,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+
   //Creer une méthode pour affiché le form d'un new-transaction
   void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
@@ -131,6 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
           behavior: HitTestBehavior.opaque,
         ); 
     },);
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) => tx.id == id);
+    });
   }
   //CONSTRUCTEUR DE LA PAGE
   @override
@@ -158,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             //espace graphique dans un container
             Chart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(_userTransactions, _deleteTransaction,),
             //liste des transactions
           ],
         ),
