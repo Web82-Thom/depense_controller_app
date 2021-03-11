@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './models/transaction.dart';
 import './widgets/chart.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,6 +20,17 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English, no country code
+        const Locale('ar', ''), // Arabic, no country code
+        const Locale.fromSubtags(languageCode: 'zh'), // Chinese *See Advanced Locales below*
+        // ... other locales the app supports
+      ],
       title: 'Dépenses personnel',
       theme: ThemeData(
         //color principal du theme
@@ -90,6 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     }).toList();
+
+    
   }
   //Methode pour ajouter une transaction et pointer sur les values txTitle et txAmount
   void _addNewTransaction(String txTitle, double txAmount) {
