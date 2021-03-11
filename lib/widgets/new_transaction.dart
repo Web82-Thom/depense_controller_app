@@ -35,7 +35,8 @@ class _NewTransactionState extends State<NewTransaction> {
     return Card(
       elevation: 5,
       child: Container(
-        padding: EdgeInsets.all(15),
+        // margin: EdgeInsets.all(0),
+        padding: EdgeInsets.all(5),
         height: 1000,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -55,16 +56,42 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(), //appel la function 
             ),
-            TextButton(
-              child: Text(
-                'Ajouter une dépense',
-                style: TextStyle(
-                  color: Colors.purple,
-                  fontSize: 14,
+            Container(
+              height: 80,
+              child: Row(
+                children: <Widget>[
+                  Text('Pas de date selectionner!'),
+                  TextButton(
+                    child: Text(
+                      'Choisissez une date',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {},//appel la function
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10,),
+                child: TextButton(
+                  child: Text(
+                    'Ajouter une dépense',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.button.color,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  onPressed: submitData,//appel la function
                 ),
               ),
-              onPressed: submitData,//appel la function
-            )
+            ),
           ],
         ),
       )
