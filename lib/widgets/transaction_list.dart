@@ -14,11 +14,7 @@ class TransactionList extends StatelessWidget {
   //CONSTRUCTEUR DU CONTAINER DISPLAY TRANSACTION
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //important mettre une hauteur
-      height: 370,
-      //methode de scroll par ListView et la propriété itemBuilder en fontion annonyme
-      child: transactions.isEmpty
+    return transactions.isEmpty
           ? Column(children: <Widget>[
               Text(
                 'Pas de transaction!',
@@ -78,7 +74,7 @@ class TransactionList extends StatelessWidget {
                 );
               },
               itemCount: transactions.length,
-            ),
-    );
+            );
+    
   }
 }
