@@ -151,6 +151,8 @@ class _MyHomePageState extends State<MyHomePage> {
   //CONSTRUCTEUR DE LA PAGE
   @override
   Widget build(BuildContext context) {
+    //creation var pour l'affichage en paysage
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
         title: Text(
           widget.title, 
@@ -162,45 +164,66 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () => _startAddNewTransaction(context),
           )
         ],
-      );
+    );
+    // création d'une variable pour stocker la taille et contenue du container liste de transaction
+    final txListWidget = Container ( 
+      height: (
+        MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
+      * 0.7,
+      child: TransactionList(
+        _userTransactions,
+        _deleteTransaction,
+      ),
+    );
+
     return Scaffold(
       appBar: appBar,
       //mise en column du body
       body: SingleChildScrollView(
-              child: Column(
+        child: Column(
           //style de la column
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             //responsive orientation button true or false
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Voir le graphique'
+            //et condition si c'est en paysage alors
+            if (isLandscape) 
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Voir le graphique'
                   ),
-                // button true or false
-                Switch(
-                  value: _showChart, 
-                  onChanged: (val) {
-                    setState(() {
-                      _showChart = val;
-                    });
-                  } , 
-                ),
-              ],
-            ),
+                  // button true or false
+                  Switch(
+                    value: _showChart, 
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    } , 
+                  ),
+                ],
+              ),
+            
             //espace graphique dans un container
-            //if showChart is true alors
-            _showChart ? Container( 
+            //si on est pas en paysage
+            if (!isLandscape) Container ( 
               height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
               * 0.3,
               child: Chart(_recentTransactions),
-            ):Container( 
+            ),
+            // si pas en paysage affiche widget liste de transactions
+            if (!isLandscape) txListWidget,
+            // si en mode paysage execute l'expression ternaire showcart est true et affiche mon container
+            if (isLandscape) _showChart 
+            ? Container ( 
               height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
               * 0.7,
-              child: TransactionList(_userTransactions, _deleteTransaction,),
-            ),
+              child: Chart(_recentTransactions),
+            ) :
+            //sinon affichage de la liste des transactions
+            txListWidget, 
             //liste des transactions
           ],
         ),
