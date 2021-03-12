@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
@@ -7,6 +8,12 @@ import './widgets/chart.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
+  //mode affichage portrait uniquement
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]);
   runApp(MyApp());
 }
 
@@ -27,8 +34,8 @@ class _MyAppState extends State<MyApp> {
       ],
       supportedLocales: [
         const Locale('en', ''), // English, no country code
-        const Locale('ar', ''), // Arabic, no country code
-        const Locale.fromSubtags(languageCode: 'zh'), // Chinese *See Advanced Locales below*
+        const Locale('fr', ''), // Français, no country code
+        // const Locale.fromSubtags(languageCode: 'zh'), // Chinese *See Advanced Locales below*
         // ... other locales the app supports
       ],
       title: 'Dépenses personnel',
@@ -92,6 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
       //   date: DateTime.now(),
       // ),
   ];
+  //bolean pour l'affichage en responsive orientation
+  bool _showChart = false ;
   //guetter transactions
   List<Transaction> get _recentTransactions {
     //executer une function sur chaque éléments d'une liste. si c'est true l'élément est conserver dans une list (.where)
@@ -142,8 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //CONSTRUCTEUR DE LA PAGE
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    final appBar = AppBar(
         title: Text(
           widget.title, 
         ),
@@ -154,8 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () => _startAddNewTransaction(context),
           )
         ],
-
-      ),
+      );
+    return Scaffold(
+      appBar: appBar,
       //mise en column du body
       body: SingleChildScrollView(
               child: Column(
@@ -163,9 +172,35 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            //responsive orientation button true or false
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Voir le graphique'
+                  ),
+                // button true or false
+                Switch(
+                  value: _showChart, 
+                  onChanged: (val) {
+                    setState(() {
+                      _showChart = val;
+                    });
+                  } , 
+                ),
+              ],
+            ),
             //espace graphique dans un container
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions, _deleteTransaction,),
+            //if showChart is true alors
+            _showChart ? Container( 
+              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
+              * 0.3,
+              child: Chart(_recentTransactions),
+            ):Container( 
+              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
+              * 0.7,
+              child: TransactionList(_userTransactions, _deleteTransaction,),
+            ),
             //liste des transactions
           ],
         ),
