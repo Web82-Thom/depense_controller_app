@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -151,8 +153,10 @@ class _MyHomePageState extends State<MyHomePage> {
   //CONSTRUCTEUR DE LA PAGE
   @override
   Widget build(BuildContext context) {
+    //creation var pour le mediaQuery
+    final mediaQuery = MediaQuery.of(context);
     //creation var pour l'affichage en paysage
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
         title: Text(
           widget.title, 
@@ -168,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // création d'une variable pour stocker la taille et contenue du container liste de transaction
     final txListWidget = Container ( 
       height: (
-        MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
+        mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) 
       * 0.7,
       child: TransactionList(
         _userTransactions,
@@ -195,7 +199,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     'Voir le graphique'
                   ),
                   // button true or false
-                  Switch(
+                  Switch.adaptive(
+                    activeColor: Theme.of(context).errorColor,
                     value: _showChart, 
                     onChanged: (val) {
                       setState(() {
@@ -209,7 +214,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //espace graphique dans un container
             //si on est pas en paysage
             if (!isLandscape) Container ( 
-              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
+              height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) 
               * 0.3,
               child: Chart(_recentTransactions),
             ),
@@ -218,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // si en mode paysage execute l'expression ternaire showcart est true et affiche mon container
             if (isLandscape) _showChart 
             ? Container ( 
-              height: (MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top) 
+              height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) 
               * 0.7,
               child: Chart(_recentTransactions),
             ) :
@@ -231,7 +236,9 @@ class _MyHomePageState extends State<MyHomePage> {
       //emplecement du button en bas
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       //ajout d'un bouton flottant
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Platform.isIOS 
+      ? Container() 
+      : FloatingActionButton(
         child: Icon(Icons.add),
         //si on appuit montre le form title + amount
         onPressed: () => _startAddNewTransaction(context),
