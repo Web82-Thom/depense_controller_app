@@ -60,74 +60,82 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        // margin: EdgeInsets.all(0),
-        padding: EdgeInsets.all(5),
-        height: 1000,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Titre',
+    return SingleChildScrollView(
+      
+          child: Card(
+        elevation: 5,
+        child: Container(
+          // margin: EdgeInsets.all(0),
+          padding: EdgeInsets.only(
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 50,
+          ),
+          // height: 5000,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Titre',
+                ),
+                controller: _titleController,
+                onSubmitted: (_) => _submitData(), //appel la function
               ),
-              controller: _titleController,
-              onSubmitted: (_) => _submitData(), //appel la function
-            ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Prix',
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Prix',
+                ),
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => _submitData(), //appel la function 
               ),
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(), //appel la function 
-            ),
-            Container(
-              height: 80,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                                      child: Text(_selectedDate == null 
-                      ? 'Pas de date selectionner!' 
-                      : DateFormat.yMMMMEEEEd('fr').format(_selectedDate),
-                    ),
-                  ),
-                  TextButton(
-                    child: Text(
-                      'Choisissez une date',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+              Container(
+                height: 80,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                                        child: Text(_selectedDate == null 
+                        ? 'Pas de date selectionner!' 
+                        : DateFormat.yMMMMEEEEd('fr').format(_selectedDate),
                       ),
                     ),
-                    onPressed: _presentDatePicker,//appel la function
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              color: Theme.of(context).primaryColor,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10,),
-                child: TextButton(
-                  child: Text(
-                    'Ajouter une dépense',
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.button.color,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+                    TextButton(
+                      child: Text(
+                        'Choisissez une date',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: _presentDatePicker,//appel la function
                     ),
-                  ),
-                  onPressed: _submitData,//appel la function
+                  ],
                 ),
               ),
-            ),
-          ],
-        ),
-      )
+              Container(
+                color: Theme.of(context).primaryColor,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10,),
+                  child: TextButton(
+                    child: Text(
+                      'Ajouter une dépense',
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.button.color,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                    onPressed: _submitData,//appel la function
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ),
     );
   }
 }
