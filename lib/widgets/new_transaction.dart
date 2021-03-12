@@ -44,6 +44,7 @@ class _NewTransactionState extends State<NewTransaction> {
       initialDate: DateTime.now(), 
       firstDate: DateTime(2015), 
       lastDate: DateTime.now(),
+      locale : const Locale("fr","FR"),
     ).then((pickedDate) {
       if (pickedDate == null) {
         return;
