@@ -15,7 +15,8 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-          ? Column(children: <Widget>[
+          ? LayoutBuilder(builder: (ctx, constraints) {
+            return Column(children: <Widget>[
               Text(
                 'Pas de transaction!',
                 style: Theme.of(context).textTheme.headline6,
@@ -26,13 +27,17 @@ class TransactionList extends StatelessWidget {
               ),
               //Mettre l'image dans un container
               Container(
-                height: 200,
+                height: constraints.maxHeight * 
+                0.5,
                 child: Image.asset(
                   'assets/images/waiting.png',
                   fit: BoxFit.cover,
                 )
               ),
-            ])
+            ],
+            );
+          })
+           
           : ListView.builder(
               itemBuilder: (contexte, index) {
                 return Card(
