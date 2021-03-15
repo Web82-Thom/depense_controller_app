@@ -1,7 +1,7 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
@@ -51,25 +51,27 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Quicksand',
         //font des autres titres title of transactions
         textTheme: ThemeData.light().textTheme.copyWith(
-          headline6: TextStyle(
-            fontFamily: 'OpenSans',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.green,
-          ),
-          button: TextStyle(color: Colors.white,),
-        ),
+              headline6: TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+              button: TextStyle(
+                color: Colors.white,
+              ),
+            ),
         // font appbar
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
-            //jouer avec les options HeadLine
-            headline6: TextStyle(
-              fontFamily: 'OpenSans', 
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
+                //jouer avec les options HeadLine
+                headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
         ),
       ),
       home: MyHomePage(title: 'Gestions des dépenses'),
@@ -88,21 +90,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   //LIST DES TRANSACTIONS
   final List<Transaction> _userTransactions = [
-      // Transaction(
-      //   id: 'T1',
-      //   title: 'Nouvelle chaussure',
-      //   amount: 69.99,
-      //   date: DateTime.now(),
-      // ),
-      // Transaction(
-      //   id: 'T2',
-      //   title: 'Téléphone',
-      //   amount: 150,
-      //   date: DateTime.now(),
-      // ),
+    // Transaction(
+    //   id: 'T1',
+    //   title: 'Nouvelle chaussure',
+    //   amount: 69.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 'T2',
+    //   title: 'Téléphone',
+    //   amount: 150,
+    //   date: DateTime.now(),
+    // ),
   ];
   //bolean pour l'affichage en responsive orientation
-  bool _showChart = false ;
+  bool _showChart = false;
   //guetter transactions
   List<Transaction> get _recentTransactions {
     //executer une function sur chaque éléments d'une liste. si c'est true l'élément est conserver dans une list (.where)
@@ -114,11 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     }).toList();
-
-    
   }
+
   //Methode pour ajouter une transaction et pointer sur les values txTitle et txAmount
-  void _addNewTransaction(String txTitle, double txAmount, DateTime chosenDate) {
+  void _addNewTransaction(
+      String txTitle, double txAmount, DateTime chosenDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
@@ -126,11 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
       id: DateTime.now().toString(),
     );
 
-    setState((){
+    setState(() {
       _userTransactions.add(newTx);
     });
   }
-
 
   //Creer une méthode pour affiché le form d'un new-transaction
   void _startAddNewTransaction(BuildContext ctx) {
@@ -139,10 +140,65 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child : NewTransaction(_addNewTransaction),
+          child: NewTransaction(_addNewTransaction),
           behavior: HitTestBehavior.opaque,
-        ); 
-    },);
+        );
+      },
+    );
+  }
+
+  //Creer une méthode pour la construction en affichage Landscape
+  List<Widget> _buildLandscapeContent(
+    MediaQueryData mediaQuery,
+    AppBar appBar,
+    Widget txListWidget,
+  ) {
+    return [Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'Voir le graphique',
+          style: Theme.of(context).textTheme.headline6,
+        ),
+        // button true or false
+        Switch(
+          activeColor: Theme.of(context).accentColor,
+          value: _showChart,
+          onChanged: (val) {
+            setState(() {
+              _showChart = val;
+            });
+          },
+        ),
+      ],
+    ), 
+    _showChart
+                ? Container(
+                    height: (mediaQuery.size.height -
+                            appBar.preferredSize.height -
+                            mediaQuery.padding.top) *
+                        0.7,
+                    child: Chart(_recentTransactions),
+                  )
+                :
+                //sinon affichage de la liste des transactions
+                txListWidget,];
+  }
+
+  //Creer une méthode pour la construction en affichage portrait
+  List<Widget> _buildPortraitContent(
+    MediaQueryData mediaQuery,
+    AppBar appBar,
+    Widget txListWidget,
+  ) {
+    return [Container(
+      height: (
+        mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top
+      ) 
+      * 0.3,
+      child: Chart(_recentTransactions,),
+    ),
+    txListWidget];
   }
 
   void _deleteTransaction(String id) {
@@ -150,6 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _userTransactions.removeWhere((tx) => tx.id == id);
     });
   }
+
   //CONSTRUCTEUR DE LA PAGE
   @override
   Widget build(BuildContext context) {
@@ -158,91 +215,63 @@ class _MyHomePageState extends State<MyHomePage> {
     //creation var pour l'affichage en paysage
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
-        title: Text(
-          widget.title, 
-        ),
-        //ajout d'un buton +
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add), 
-            onPressed: () => _startAddNewTransaction(context),
-          )
-        ],
+      title: Text(
+        widget.title,
+      ),
+      //ajout d'un buton +
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => _startAddNewTransaction(context),
+        )
+      ],
     );
     // création d'une variable pour stocker la taille et contenue du container liste de transaction
-    final txListWidget = Container ( 
-      height: (
-        mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) 
-      * 0.7,
+    final txListWidget = Container(
+      height: (mediaQuery.size.height -
+              appBar.preferredSize.height -
+              mediaQuery.padding.top) *
+          0.7,
       child: TransactionList(
         _userTransactions,
         _deleteTransaction,
       ),
     );
-
+    // creation variable pour la page body
+    final pageBody = SingleChildScrollView(
+      child: Column(
+        //style de la column
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          //et condition si c'est en paysage alors
+          if (isLandscape) ..._buildLandscapeContent(
+            mediaQuery,
+            appBar,
+            txListWidget,
+          ),
+          //si on est pas en paysage
+          if (!isLandscape)
+            ..._buildPortraitContent(
+              mediaQuery,
+              appBar,
+              txListWidget,
+            ),
+        ],
+      ),
+    );
+    // var du button action
+    final actionButton = FloatingActionButton(
+      child: Icon(Icons.add),
+      //si on appuit montre le form title + amount
+      onPressed: () => _startAddNewTransaction(context),
+    );
+    // Contenu de la page en integrant les variables
     return Scaffold(
       appBar: appBar,
-      //mise en column du body
-      body: SingleChildScrollView(
-        child: Column(
-          //style de la column
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            //responsive orientation button true or false
-            //et condition si c'est en paysage alors
-            if (isLandscape) 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Voir le graphique'
-                  ),
-                  // button true or false
-                  Switch.adaptive(
-                    activeColor: Theme.of(context).errorColor,
-                    value: _showChart, 
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
-                    } , 
-                  ),
-                ],
-              ),
-            
-            //espace graphique dans un container
-            //si on est pas en paysage
-            if (!isLandscape) Container ( 
-              height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) 
-              * 0.3,
-              child: Chart(_recentTransactions),
-            ),
-            // si pas en paysage affiche widget liste de transactions
-            if (!isLandscape) txListWidget,
-            // si en mode paysage execute l'expression ternaire showcart est true et affiche mon container
-            if (isLandscape) _showChart 
-            ? Container ( 
-              height: (mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top) 
-              * 0.7,
-              child: Chart(_recentTransactions),
-            ) :
-            //sinon affichage de la liste des transactions
-            txListWidget, 
-            //liste des transactions
-          ],
-        ),
-      ),
-      //emplecement du button en bas
+      body: pageBody,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      //ajout d'un bouton flottant
-      floatingActionButton: Platform.isIOS 
-      ? Container() 
-      : FloatingActionButton(
-        child: Icon(Icons.add),
-        //si on appuit montre le form title + amount
-        onPressed: () => _startAddNewTransaction(context),
-      ),
+      floatingActionButton: actionButton,
     );
   }
 }
