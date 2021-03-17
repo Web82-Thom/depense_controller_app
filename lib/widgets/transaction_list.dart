@@ -4,7 +4,7 @@ import '../models/transaction.dart';
 import 'transaction_item.dart';
 
 class TransactionList extends StatelessWidget {
-  //recuperer le transactions
+  //recuperer les transactions a partir du getter model/transaction
   final List<Transaction> transactions;
   final Function deleteTx;
   //Instencie la list et function
@@ -37,11 +37,14 @@ class TransactionList extends StatelessWidget {
         ],
       );
     },)
-    : ListView.builder(
-        itemBuilder: (contexte, index) {
-          return TransactionItem(transaction: transactions[index], deleteTx: deleteTx,);
-        },
-        itemCount: transactions.length,
+    : ListView(
+      children: transactions.map((tx) => 
+        TransactionItem(
+          key: ValueKey(tx.id),
+          transaction: tx,
+          deleteTx: deleteTx,
+        )
+      ).toList(),
     );
   }
 }
