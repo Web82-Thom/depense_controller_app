@@ -87,7 +87,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver{
   //LIST DES TRANSACTIONS
   final List<Transaction> _userTransactions = [
     // Transaction(
@@ -105,6 +105,26 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
   //bolean pour l'affichage en responsive orientation
   bool _showChart = false;
+
+  //methode listenner
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+  //Creer une methode app en background ou forground
+  @override 
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+
+  }
+  //efface les lidtenner des modifications du cycle de vie
+  @override
+  dispose(){
+   WidgetsBinding.instance.removeObserver(this); 
+   super.dispose();
+  }
+
   //guetter transactions
   List<Transaction> get _recentTransactions {
     //executer une function sur chaque éléments d'une liste. si c'est true l'élément est conserver dans une list (.where)
