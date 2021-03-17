@@ -31,12 +31,8 @@ class Chart extends StatelessWidget {
             }
       }
 
-      // Intl.withLocale('fr', () => print('myMessage()'));
-      //Intl.defaultLocale = 'pt_BR';
-      print(DateFormat.E().format(weekDay));
-      print(totalSum);
-
-      // pour gerer les dates utiliser "import intl"
+      // print(DateFormat.E().format(weekDay));
+      // print(totalSum);
       return {
         'day': DateFormat.EEEE('fr').format(weekDay).substring(0, 1),
          'amount': totalSum,
@@ -53,7 +49,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
+    // print(groupedTransactionValues);
     //Envelopper ce graph dans une CARD
     return Card(
         elevation: 6,
